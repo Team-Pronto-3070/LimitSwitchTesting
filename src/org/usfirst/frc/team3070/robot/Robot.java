@@ -51,17 +51,17 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
     	lift1.set(xbox.getRawAxis(1));
     	lift2.set(-xbox.getRawAxis(1));
-    	
+  
     	// for testing if limit switches are working
     	if (upperLimit.get()) {
-    		System.out.println("At Top");
+    		//System.out.println("At Top");
     	}
     	
     	if (lowerLimit.get()) {
-    		System.out.println("At Bottom");
+    		//System.out.println("At Bottom");
     	}
     	
-    	if (toteLimit.get()) {
+    	if (!toteLimit.get()) {
     		System.out.println("Tote");
     	}
     	
