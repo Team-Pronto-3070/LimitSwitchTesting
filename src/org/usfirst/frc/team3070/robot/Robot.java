@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.Joystick;
 public class Robot extends IterativeRobot {
 	
 	CANTalon lift1, lift2;
-	Joystick xbox;
+	Joystick jLeft;
 	DigitalInput upperLimit, lowerLimit, toteLimit;
 //	TestLift lift;
 	
@@ -28,13 +28,13 @@ public class Robot extends IterativeRobot {
     	lift1 = new CANTalon(8);
     	lift2 = new CANTalon(9);
     	
-    	xbox = new Joystick(1);
+    	jLeft = new Joystick(1);
     	
     	upperLimit = new DigitalInput(1);
     	lowerLimit = new DigitalInput(2);
     	toteLimit = new DigitalInput(3);
     	
-//    	lift = new TestLift(lift1, lift2, upperLimit, lowerLimit, toteLimit, xbox);
+//    	lift = new TestLift(lift1, lift2, upperLimit, lowerLimit, toteLimit, jLeft);
 
     }
 
@@ -49,8 +49,8 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-    	lift1.set(xbox.getRawAxis(1));
-    	lift2.set(-xbox.getRawAxis(1));
+    	lift1.set(jLeft.getY());
+    	lift2.set(-jLeft.getY());
   
     	// for testing if limit switches are working
     	if (upperLimit.get()) {
