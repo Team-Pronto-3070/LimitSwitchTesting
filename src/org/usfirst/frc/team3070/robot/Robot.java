@@ -26,7 +26,7 @@ public class Robot extends IterativeRobot {
      */
     public void robotInit() {
     	lift1 = new CANTalon(8);
-    	lift2 = new CANTalon(8);
+    	lift2 = new CANTalon(9);
     	
     	xbox = new Joystick(1);
     	
