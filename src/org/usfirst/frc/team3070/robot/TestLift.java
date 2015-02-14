@@ -38,11 +38,11 @@ public class TestLift {
 		Stopped {
 			@Override
 			public LiftState check() {
-				if (!atTop && xbox.getRawButton(1)) {
+				if (atTop && xbox.getRawButton(1)) {
 					return StartLiftUp;
 				}
 
-				if (!atBottom && xbox.getRawButton(2)) {
+				if (atBottom && xbox.getRawButton(2)) {
 					return StartLiftDown;
 				}
 
@@ -60,12 +60,12 @@ public class TestLift {
 		LiftingUp {
 			@Override
 			public LiftState check() {
-				if (upper.get()) {
+				if (!upper.get()) {
 					atTop = true;
 					return Stopping;
 				}
 				
-				if (tote.get()) {
+				if (!tote.get()) {
 					return WaitForRelease;
 				}
 				
@@ -79,7 +79,7 @@ public class TestLift {
 		WaitForRelease {
 			@Override
 			public LiftState check() {
-				if (tote.get()) {
+				if (!tote.get()) {
 					lift(.25);
 				} else {
 					lift(0);
@@ -103,12 +103,12 @@ public class TestLift {
 		LiftingDown {
 			@Override
 			public LiftState check() {
-				if (lower.get() && toteCount == 1) {
+				if (!lower.get() && toteCount == 1) {
 					atBottom = true;
 					return Stopping;
 				}
 				
-				if (lower.get()) {
+				if (!lower.get()) {
 					return MoveDownPastSwitch;
 				}
 				
@@ -120,7 +120,7 @@ public class TestLift {
 		MoveDownPastSwitch {
 			@Override
 			public LiftState check() {
-				if (lower.get()) {
+				if (!lower.get()) {
 					lift(-LIFT_SPEED);
 				} else {
 					toteCount--;
