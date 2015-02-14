@@ -66,6 +66,8 @@ public class Robot extends IterativeRobot {
     	}
     	
         // lift.periodic();
+    	System.out.println("8: " + lift1.getOutputVoltage());
+    	System.out.println("9: " + lift2.getOutputVoltage());
     }
     
     public void disabledInit() {
