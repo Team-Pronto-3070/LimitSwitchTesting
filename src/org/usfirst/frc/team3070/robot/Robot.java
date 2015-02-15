@@ -15,8 +15,8 @@ import edu.wpi.first.wpilibj.Joystick;
  */
 public class Robot extends IterativeRobot {
 	
-	CANTalon lift1, lift2;
-	Joystick jLeft;
+	CANTalon lift1, lift2, flexer;
+	Joystick jLeft, jRight;
 	DigitalInput upperLimit, lowerLimit, toteLimit;
 //	TestLift lift;
 	
@@ -27,14 +27,16 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
     	lift1 = new CANTalon(8);
     	lift2 = new CANTalon(9);
+    	flexer = new CANTalon(6);
     	
     	jLeft = new Joystick(1);
+    	jRight = new Joystick(2);
     	
     	upperLimit = new DigitalInput(1);
     	lowerLimit = new DigitalInput(2);
     	toteLimit = new DigitalInput(3);
     	
-//    	lift = new TestLift(lift1, lift2, upperLimit, lowerLimit, toteLimit, jLeft);
+//    	lift = new TestLift(lift1, lift2, upperLimit, lowerLimit, toteLimit, jRight);
 
     }
 
@@ -51,7 +53,15 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
     	lift1.set(jLeft.getY());
     	lift2.set(-jLeft.getY());
-  
+    	
+    	if (jLeft.getRawButton(3)) {
+    		flexer.set(.5);
+    	} else if (jLeft.getRawButton(2)) {
+    		flexer.set(-.5);
+    	} else {
+    		flexer.set(0);
+    	}
+    	
     	// for testing if limit switches are working
     	if (upperLimit.get()) {
     		//System.out.println("At Top");

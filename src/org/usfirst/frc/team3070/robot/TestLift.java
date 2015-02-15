@@ -13,22 +13,22 @@ public class TestLift {
 	private static final double LIFT_SPEED = .6;
 	
 	static CANTalon motor1, motor2;
-	static Joystick xbox;
+	static Joystick jRight;
 	static DigitalInput lower, upper, tote;
-	static boolean atTop, atBottom, readyForNextTote;
+	static boolean notAtTop, notAtBottom, readyForNextTote;
 	static int toteCount;
 	LiftState state;
 
 	public TestLift(CANTalon m1, CANTalon m2, DigitalInput u, DigitalInput l,
-			DigitalInput t, Joystick x) {
+			DigitalInput t, Joystick r) {
 		motor1 = m1;
 		motor2 = m2;
 		lower = l;
 		upper = u;
 		tote = t;
-		xbox = x;
-		atTop = false;
-		atBottom = false;
+		jRight = r;
+		notAtTop = true;
+		notAtBottom = true;
 		toteCount = 0;
 		
 		state = LiftStates.Stopped;
@@ -38,11 +38,11 @@ public class TestLift {
 		Stopped {
 			@Override
 			public LiftState check() {
-				if (!atTop && xbox.getRawButton(1)) {
+				if (notAtTop && jRight.getRawButton(3)) {
 					return StartLiftUp;
 				}
 
-				if (!atBottom && xbox.getRawButton(2)) {
+				if (notAtBottom && jRight.getRawButton(2)) {
 					return StartLiftDown;
 				}
 
@@ -53,7 +53,7 @@ public class TestLift {
 			@Override
 			public LiftState check() {
 				lift(LIFT_SPEED);
-				atBottom = false;
+				notAtBottom = true;
 				return LiftingUp;
 			}
 		},
@@ -61,7 +61,7 @@ public class TestLift {
 			@Override
 			public LiftState check() {
 				if (upper.get()) {
-					atTop = true;
+					notAtTop = false;
 					return Stopping;
 				}
 				
@@ -69,7 +69,7 @@ public class TestLift {
 					return WaitForRelease;
 				}
 				
-				if (!xbox.getRawButton(1)) {
+				if (!jRight.getRawButton(3)) {
 					return Stopping;
 				}
 				
@@ -79,13 +79,12 @@ public class TestLift {
 		WaitForRelease {
 			@Override
 			public LiftState check() {
-				if (tote.get()) {
-					lift(.25);
+				if (!tote.get()) {
+					lift(.5);
 				} else {
 					lift(0);
 				}
-				if (!xbox.getRawButton(1)) {
-					toteCount++;
+				if (!jRight.getRawButton(3)) {
 					return Stopping;
 				}
 				
@@ -96,37 +95,22 @@ public class TestLift {
 			@Override
 			public LiftState check() {
 				lift(-LIFT_SPEED);
-				atTop = false;
+				notAtTop = true;
 				return LiftingDown;
 			}
 		},
 		LiftingDown {
 			@Override
 			public LiftState check() {
-				if (lower.get() && toteCount == 1) {
-					atBottom = true;
+				if (!lower.get()) {
+					notAtBottom = false;
 					return Stopping;
 				}
 				
-				if (lower.get()) {
-					return MoveDownPastSwitch;
-				}
-				
-				if (!xbox.getRawButton(2))
+				if (!jRight.getRawButton(2))
 					return Stopping;
+				
 				return LiftingDown;
-			}
-		},
-		MoveDownPastSwitch {
-			@Override
-			public LiftState check() {
-				if (lower.get()) {
-					lift(-LIFT_SPEED);
-				} else {
-					toteCount--;
-					return LiftingDown;
-				}
-				return MoveDownPastSwitch;
 			}
 		},
 		Stopping {
