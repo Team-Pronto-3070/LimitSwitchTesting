@@ -18,7 +18,7 @@ public class Robot extends IterativeRobot {
 	CANTalon lift1, lift2, flexer;
 	Joystick jLeft, jRight;
 	DigitalInput upperLimit, lowerLimit, toteLimit;
-//	TestLift lift;
+	TestLift lift;
 	
     /**
      * This function is run when the robot is first started up and should be
@@ -36,7 +36,7 @@ public class Robot extends IterativeRobot {
     	lowerLimit = new DigitalInput(2);
     	toteLimit = new DigitalInput(3);
     	
-//    	lift = new TestLift(lift1, lift2, upperLimit, lowerLimit, toteLimit, jRight);
+    	lift = new TestLift(lift1, lift2, upperLimit, lowerLimit, toteLimit, jRight);
 
     }
 
@@ -51,33 +51,33 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-    	lift1.set(jLeft.getY());
-    	lift2.set(-jLeft.getY());
+//    	lift1.set(jLeft.getY());
+//    	lift2.set(-jLeft.getY());
     	
-    	if (jLeft.getRawButton(3)) {
+    	/*if (jLeft.getRawButton(3)) {
     		flexer.set(.5);
     	} else if (jLeft.getRawButton(2)) {
     		flexer.set(-.5);
     	} else {
     		flexer.set(0);
-    	}
+    	}*/
     	
     	// for testing if limit switches are working
-    	if (upperLimit.get()) {
-    		//System.out.println("At Top");
+    	if (!upperLimit.get()) {
+    		System.out.println("At Top");
     	}
     	
-    	if (lowerLimit.get()) {
-    		//System.out.println("At Bottom");
+    	if (!lowerLimit.get()) {
+    		System.out.println("At Bottom");
     	}
     	
     	if (!toteLimit.get()) {
     		System.out.println("Tote");
     	}
     	
-        // lift.periodic();
-    	System.out.println("8: " + lift1.getOutputVoltage());
-    	System.out.println("9: " + lift2.getOutputVoltage());
+//      lift.periodic();
+//    	System.out.println("8: " + lift1.getOutputVoltage());
+//    	System.out.println("9: " + lift2.getOutputVoltage());
     }
     
     public void disabledInit() {

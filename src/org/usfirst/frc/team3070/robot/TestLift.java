@@ -10,7 +10,7 @@ public class TestLift {
 		public LiftState check();
 	}
 
-	private static final double LIFT_SPEED = .6;
+	private static final double LIFT_SPEED = .5;
 	
 	static CANTalon motor1, motor2;
 	static Joystick jRight;
@@ -38,11 +38,11 @@ public class TestLift {
 		Stopped {
 			@Override
 			public LiftState check() {
-				if (notAtTop && jRight.getRawButton(3)) {
+				if (notAtTop && jRight.getRawButton(2)) {
 					return StartLiftUp;
 				}
 
-				if (notAtBottom && jRight.getRawButton(2)) {
+				if (notAtBottom && jRight.getRawButton(3)) {
 					return StartLiftDown;
 				}
 
@@ -60,16 +60,16 @@ public class TestLift {
 		LiftingUp {
 			@Override
 			public LiftState check() {
-				if (upper.get()) {
+				if (!upper.get()) {
 					notAtTop = false;
 					return Stopping;
 				}
 				
-				if (tote.get()) {
+				if (!tote.get()) {
 					return WaitForRelease;
 				}
 				
-				if (!jRight.getRawButton(3)) {
+				if (!jRight.getRawButton(2)) {
 					return Stopping;
 				}
 				
@@ -84,7 +84,7 @@ public class TestLift {
 				} else {
 					lift(0);
 				}
-				if (!jRight.getRawButton(3)) {
+				if (!jRight.getRawButton(2)) {
 					return Stopping;
 				}
 				
@@ -107,7 +107,7 @@ public class TestLift {
 					return Stopping;
 				}
 				
-				if (!jRight.getRawButton(2))
+				if (!jRight.getRawButton(3))
 					return Stopping;
 				
 				return LiftingDown;
