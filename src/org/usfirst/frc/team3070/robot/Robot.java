@@ -75,7 +75,7 @@ public class Robot extends IterativeRobot {
     		System.out.println("Tote");
     	}
     	
-//      lift.periodic();
+      lift.periodic();
 //    	System.out.println("8: " + lift1.getOutputVoltage());
 //    	System.out.println("9: " + lift2.getOutputVoltage());
     }

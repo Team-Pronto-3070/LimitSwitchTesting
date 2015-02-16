@@ -38,11 +38,11 @@ public class TestLift {
 		Stopped {
 			@Override
 			public LiftState check() {
-				if (notAtTop && jRight.getRawButton(2)) {
+				if (notAtTop && jRight.getRawButton(3)) {
 					return StartLiftUp;
 				}
 
-				if (notAtBottom && jRight.getRawButton(3)) {
+				if (notAtBottom && jRight.getRawButton(2)) {
 					return StartLiftDown;
 				}
 
@@ -69,7 +69,7 @@ public class TestLift {
 					return WaitForRelease;
 				}
 				
-				if (!jRight.getRawButton(2)) {
+				if (!jRight.getRawButton(3)) {
 					return Stopping;
 				}
 				
@@ -84,7 +84,7 @@ public class TestLift {
 				} else {
 					lift(0);
 				}
-				if (!jRight.getRawButton(2)) {
+				if (!jRight.getRawButton(3)) {
 					return Stopping;
 				}
 				
@@ -107,7 +107,7 @@ public class TestLift {
 					return Stopping;
 				}
 				
-				if (!jRight.getRawButton(3))
+				if (!jRight.getRawButton(2))
 					return Stopping;
 				
 				return LiftingDown;
@@ -131,8 +131,8 @@ public class TestLift {
 	}
 	
 	private static void lift(double speed) {
-		motor1.set(speed);
-		motor2.set(-speed);
+		motor1.set(-speed);
+		motor2.set(speed);
 	}
 
 }
