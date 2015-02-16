@@ -81,7 +81,7 @@ public class Robot extends IterativeRobot {
     }
     
     public void disabledInit() {
-//    	lift.stopPeriodic();
+    	lift.stopPeriodic();
     }
     
     /**
