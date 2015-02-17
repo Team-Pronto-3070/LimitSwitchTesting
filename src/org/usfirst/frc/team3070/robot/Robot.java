@@ -54,13 +54,13 @@ public class Robot extends IterativeRobot {
 //    	lift1.set(jLeft.getY());
 //    	lift2.set(-jLeft.getY());
     	
-    	/*if (jLeft.getRawButton(3)) {
+    	if (jLeft.getRawButton(3)) {
     		flexer.set(.5);
     	} else if (jLeft.getRawButton(2)) {
     		flexer.set(-.5);
     	} else {
     		flexer.set(0);
-    	}*/
+    	}
     	
     	// for testing if limit switches are working
     	if (!upperLimit.get()) {
