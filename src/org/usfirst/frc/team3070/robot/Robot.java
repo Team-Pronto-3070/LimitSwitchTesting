@@ -51,8 +51,8 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-//    	lift1.set(jLeft.getY());
-//    	lift2.set(-jLeft.getY());
+    	lift1.set(jLeft.getY());
+    	lift2.set(jLeft.getY());
     	
     	if (jLeft.getRawButton(3)) {
     		flexer.set(.5);
@@ -75,7 +75,7 @@ public class Robot extends IterativeRobot {
     		System.out.println("Tote");
     	}
     	
-      lift.periodic();
+//      lift.periodic();
 //    	System.out.println("8: " + lift1.getOutputVoltage());
 //    	System.out.println("9: " + lift2.getOutputVoltage());
     }
